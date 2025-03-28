@@ -1,0 +1,464 @@
+CURRENT DEPLOYED STAGE:
+
+https://API.com/dev1
+
+Note: Ignore the requestContext field for front-end usage, that's not relevant when making the request. 
+You just need what's inside the field.
+
+
+
+
+
+/about
+
+    GET:
+        Description: No expected params, returns all rows of about page table. Reference DB if new sections are added. Need to parse the pody to get a specific section.
+
+        Expected Call:
+        {
+        "requestContext": {
+            "http": {
+            "method": "GET",
+            "path": "/dev1/about"
+            }
+        }
+        }
+
+        Expected response:
+        {
+        "statusCode": 200,
+        "body": "[{\"section_name\":\"product_description\",\"content\":\"Hi there. Our Product Tracks you. Everywhere. No matter where you go. You cannot escape. No matter what you do. You are now a trucker for life. A mother trucker.\",\"last_updated\":\"2025-02-13T23:04:53.000Z\"},{\"section_name\":\"product_name\",\"content\":\"Mother Trucking Inc.\",\"last_updated\":\"2025-02-13T22:58:03.000Z\"},{\"section_name\":\"release_date\",\"content\":\"2/26/2025\",\"last_updated\":\"2025-02-26T05:34:41.000Z\"},{\"section_name\":\"team_number\",\"content\":\"22\",\"last_updated\":\"2025-02-13T22:53:08.000Z\"},{\"section_name\":\"version_number\",\"content\":\"0.0.2\",\"last_updated\":\"2025-02-26T05:35:33.000Z\"}]",
+        "headers": {
+            "Content-Type": "application/json"
+        }
+        }
+
+    POST:
+        Description: Updates the about page
+        
+        Request:
+            {
+            "requestContext": {
+                "http": {
+                    "method": "POST",
+                    "path": "/dev1/about"
+                }
+            },
+            "body": [
+                {
+                    "section_name": "Introduction",
+                    "content": "Welcome to our platform, where innovation meets excellence."
+                },
+                {
+                    "section_name": "Our Values",
+                    "content": "Integrity, collaboration, and a commitment to making a positive impact."
+                },
+                {
+                    "section_name": "Contact Us",
+                    "content": "Reach out anytime at contact@example.com. We're here to help!"
+                }
+            ]
+            }
+
+            Expected Response:
+                {
+                    "statusCode": 200,
+                    "body": {
+                        "message": "About page updated successfully"
+                    },
+                    "headers": {
+                        "Content-Type": "application/json",
+                        "Access-Control-Allow-Origin": "*"
+                    }
+                }
+
+/application
+    POST:
+        Description: Posts a new driver application to the database
+
+        Request:
+            {
+            "requestContext": {
+                "http": {
+                "method": "POST",
+                "path": "/dev1/application",
+                "body": "{\"driverEmail\": \"john.doe@example.com\", \"sponsorCompanyID\": \"12345\", \"fullName\": \"John Doe\"}"
+                }
+            }
+            }
+
+        Expected Response:
+            {
+            "statusCode": 200,
+            "body": "{\"message\": \"Application submitted successfully.\"}",
+            "headers": {
+                "Content-Type": "application/json",
+                "Access-Control-Allow-Origin": "*"
+            }
+            }
+
+
+/application/sponsor
+    GET:
+        Description: Gets a list of applications under a given sponsor
+
+        Request:
+            {
+            "requestContext": {
+                "http": {
+                "method": "GET",
+                "path": "/dev1/application/sponsor"
+                }
+            },
+            "queryStringParameters": {
+                "sponsorCompanyID": "1"
+            }
+            }
+
+        Expected Response:
+            {
+            "statusCode": 200,
+            "body": "[{\"appID\": 1, \"driverEmail\": \"driver1@example.com\", \"fullName\": \"Driver One\", \"status\": \"submitted\", \"submitted_at\": \"2023-09-30T12:00:00Z\"}]",
+            "headers": {
+                "Content-Type": "application/json",
+                "Access-Control-Allow-Origin": "*"
+            }
+            }
+
+/application/driver
+    GET:
+
+        Description: Gets an application submitted by a driver
+
+        Request: 
+            {
+            "requestContext": {
+                "http": {
+                "method": "GET",
+                "path": "/dev1/application/driver"
+                }
+            },
+            "queryStringParameters": {
+                "email": "driver@example.com"
+            }
+            }
+
+        Expected Response:
+            {
+            "statusCode": 200,
+            "body": "[{\"id\":1,\"driverEmail\":\"driver@example.com\",\"sponsorCompanyID\":123,\"fullName\":\"Driver Example\",\"status\":\"submitted\",\"submitted_at\":\"2023-09-30T12:00:00Z\",\"sponsor_name\":\"Sponsor Company Name\"}]",
+            "headers": {
+                "Content-Type": "application/json",
+                "Access-Control-Allow-Origin": "*"
+            }
+            }
+
+/application/status
+    PATCH:
+        Description: Updates the status of a driver's application
+
+        Request:
+            {
+            "requestContext": {
+                "http": {
+                "method": "PATCH",
+                "path": "/dev1/application/status",
+                "body": {
+                    "newStatus": "accepted"
+                }
+                }
+            }
+            }
+
+        Expected Response:
+            {
+            "statusCode": 200,
+            "body": "{\"message\": \"Status updated successfully\"}",
+            "headers": {
+                "Content-Type": "application/json",
+                "Access-Control-Allow-Origin": "*"
+            }
+            }
+
+
+
+/companies
+    GET:
+        Description: Fetches all sponsor companies 
+
+        Request:
+            {
+            "requestContext": {
+                "http": {
+                "method": "PATCH",
+                "path": "/dev1/application/status",
+                "body": {
+                    "appID": 101,
+                    "newStatus": "accepted"
+                }
+                }
+            }
+            }
+
+        Expected Response:
+            {
+            "statusCode": 200,
+            "body": "{\"message\": \"Status updated successfully\"}",
+            "headers": {
+                "Content-Type": "application/json",
+                "Access-Control-Allow-Origin": "*"
+            }
+            }
+
+    POST:
+        Description: Adds a new sponsor company
+
+        Request:
+            {
+            "requestContext": {
+                "http": {
+                "method": "POST",
+                "path": "/dev1/companies",
+                "body": {
+                    "company_name": "Awesome Sponsor Inc."
+                }
+                }
+            }
+            }
+
+        Expected Response:
+            {
+            "statusCode": 201,
+            "body": "{\"message\": \"Sponsor company added successfully\"}",
+            "headers": {
+                "Content-Type": "application/json",
+                "Access-Control-Allow-Origin": "*"
+            }
+            }
+
+
+
+
+
+/drivers
+    GET:
+        Description: Gets all drivers under a given sponsor
+        PATH: /dev1/drivers
+        Query Parameters: sponsorCompanyName=CompanyName
+        Usage: xxx.com/dev1/drivers?sponsorCompanyName=Company
+
+        Request:
+            {
+            "requestContext": {
+                "http": {
+                "method": "GET",
+                "path": "/dev1/drivers"
+                }
+            },
+            "queryStringParameters": {
+                "sponsorCompanyName": "Awesome Sponsor Inc."
+            }
+            }
+
+        Expected Response:
+            {
+            "statusCode": 200,
+            "body": "[{\"driverEmail\": \"driver@example.com\", \"sponsorCompanyID\": 1}]",
+            "headers": {
+                "Content-Type": "application/json",
+                "Access-Control-Allow-Origin": "*"
+            }
+            }
+
+
+
+/user
+
+    GET:
+        Not yet implemented - will return a list of all users, with the option to filter by user type
+
+    PATCH:
+        Description: Allows the call to change the user. Includes a request body.
+        Path: /dev1/user
+        Usage: XXX.com/dev1/user
+
+        Request:
+            {
+            "requestContext": {
+                "http": {
+                "method": "PATCH",
+                "path": "/dev1/user"
+                }
+            },
+            "body": "{\"email\": \"newuser@example.com\", \"userType\": \"sponsor\"}"
+            }
+
+        Expected Response:
+            {
+            "statusCode": 200,
+            "body": "{\"message\":\"User updated successfully\"}",
+            "headers": {
+                "Content-Type": "application/json"
+            }
+            }
+
+    POST:
+        Description: Creates a new user and puts them in the database. This includes a request body.
+        PATH: /dev1/user
+        Usage: XXX.com/dev1/user
+
+        Request: 
+            {
+            "requestContext": {
+                "http": {
+                "method": "POST",
+                "path": "/dev1/user"
+                }
+            },
+            "body": "{\"email\": \"newuser1@example.com\", \"userType\": \"driver\"}"
+            }
+
+        Expected Response:
+            {
+            "statusCode": 201,
+            "body": "{\"message\":\"newuser1@example.com created successfully\"}",
+            "headers": {
+                "Content-Type": "application/json"
+            }
+            }
+
+
+/user/{email}
+
+    GET:
+        Description: Gets information about a specific user
+
+        PATH: /dev1/user/{email}
+
+        Request:
+            {
+            "requestContext": {
+                "http": {
+                "method": "GET",
+                "path": "/dev1/user/newuser@example.com"
+                }
+            }
+            }
+
+        Expected response:
+            {
+            "statusCode": 200,
+            "body": "[{\"userID\":null,\"userType\":\"driver\",\"email\":\"newuser@example.com\"}]",
+            "headers": {
+                "Content-Type": "application/json"
+            }
+            }
+
+    DELETE:
+        Description: Deletes a specific user
+        PATH: /dev1/user/{email}
+        Usage: XXX.com/dev1/user/newuser@example.com
+
+        Request:
+            {
+            "requestContext": {
+                "http": {
+                "method": "DELETE",
+                "path": "/dev1/user/newuser@example.com"
+                }
+            }
+            }
+
+        Expected Response:
+            {
+            "statusCode": 200,
+            "body": "{\"message\":\"User deleted successfully\"}",
+            "headers": {
+                "Content-Type": "application/json"
+            }
+            }
+
+
+/user/points
+
+    GET:
+        Description: Uses a path query to get total points from a specific user
+        PATH: /dev1/user/points
+        Query Parameters: email=newuser@example.com, sponsorCompanyID=0
+        Usage: /dev1/user/points?email=newuser@example.com&sponsorCompanyID=0
+
+        Request:
+            {
+            "requestContext": {
+                "http": {
+                "method": "GET",
+                "path": "/dev1/user/points"
+                }
+            },
+            "queryStringParameters": {
+                "email": "newuser@example.com",
+                "sponsorCompanyID": "0"
+            }
+            }
+
+
+        Expected Response:
+            {
+            "statusCode": 200,
+            "body": "{\"email\":\"newuser@example.com\",\"sponsorCompanyID\":\"0\",\"totalPoints\":\"30\"}",
+            "headers": {
+                "Content-Type": "application/json"
+            }
+            }
+
+    POST:
+        Description: Uses a request body to post a point adjustment to a user. The adjustment can be positive or negative.
+        PATH: /dev1/user/points
+        Usage: XXX.com/dev1/user/points
+
+        Request:
+            {
+            "requestContext": {
+                "http": {
+                "method": "POST",
+                "path": "/dev1/user/points"
+                }
+            },
+            "body": {
+                "email": "newuser@example.com",
+                "points": "30",
+                "sponsorCompanyID": "0",
+                "description": "New user registration"
+                }
+            }
+
+
+        Expected Response:
+            {
+            "statusCode": 200,
+            "body": "{\"message\":\"points created successfully\"}"
+            }
+
+/user/relation
+
+    POST: 
+        Description: Uses a request body to add a relationship between to users
+        PATH: /dev1/user/relation
+        Usage: XXX.com/dev1/user/relation
+
+        Request: 
+            {
+            "requestContext": {
+            "http": {
+            "method": "POST",
+            "path": "/dev1/user/relation"
+            }
+            },
+            "body": "{\"email1\": \"sponsor@email.com\", \"email2\": \"driver@email.com\", \"relationType\": \"sponsor-driver\"}"
+            }
+
+        Expected Response:
+        {
+        "statusCode": 201,
+        "body": "{\"message\":\"Relationship created successfully\"}"
+        }

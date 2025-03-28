@@ -1,0 +1,159 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+  font-family: Arial, Helvetica, sans-serif;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+/* Navigation Bar */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #333;
+  padding: 15px 20px;
+  color: white;
+}
+
+.nav-buttons {
+  display: flex;
+  gap: 15px;
+}
+
+.nav-buttons button {
+  background: #555;
+  border: none;
+  color: white;
+  padding: 10px 15px;
+  cursor: pointer;
+  font-size: 16px;
+  border-radius: 5px;
+}
+
+.nav-buttons button:hover {
+  background: #777;
+}
+
+.edit-button {
+  background: red;
+  padding: 10px 15px;
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
+  color: white;
+  border-radius: 5px;
+}
+
+.edit-button:hover {
+  background: darkred;
+}
+
+/* Main Layout */
+.container {
+  display: flex;
+  flex: 1;
+}
+
+/* Sidebar */
+.sidebar {
+  width: 250px;
+  background-color: #f4f4f4;
+  padding: 20px;
+  border-right: 2px solid #ddd;
+}
+
+.sidebar h3 {
+  margin-bottom: 10px;
+}
+
+.sidebar p {
+  margin-bottom: 15px;
+  font-size: 16px;
+}
+
+/* Main Content */
+.main-content {
+  flex-grow: 1;
+  padding: 40px;
+}
+
+.product-name {
+  font-size: 28px;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+/* Product Description Box */
+.product-description {
+  position: relative; /* Allows positioning of delete button inside */
+  font-size: 18px;
+  line-height: 1.5;
+  padding: 15px;
+  margin-top: 10px;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+  transition: all 0.3s ease-in-out;
+}
+
+/* Separate content from the delete button */
+.editable-content {
+  width: 100%;
+  min-height: 50px;
+  padding: 10px;
+  outline: none;
+}
+
+/* When editable */
+.editable[contenteditable="true"] {
+  border: 2px dashed #007bff;
+  box-shadow: 0 0 10px rgba(0, 123, 255, 0.3);
+  background-color: #f9f9ff;
+}
+
+/* Delete "X" Button */
+.remove-btn {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  background: darkred;
+  border: none;
+  color: white;
+  padding: 5px 10px;
+  cursor: pointer;
+  font-size: 12px;
+  border-radius: 3px;
+  z-index: 10;
+}
+
+.remove-btn:hover {
+  background: red;
+}
+
+/* Action Buttons */
+.action-buttons {
+  margin-top: 10px;
+}
+
+.action-buttons button {
+  background: green;
+  border: none;
+  color: white;
+  padding: 8px 12px;
+  cursor: pointer;
+  font-size: 14px;
+  border-radius: 5px;
+  margin-right: 5px;
+}

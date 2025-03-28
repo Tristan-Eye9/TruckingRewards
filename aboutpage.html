@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Information</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+
+        /* Navigation Bar */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #333;
+            padding: 15px 20px;
+            color: white;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .nav-buttons button {
+            background: #555;
+            border: none;
+            color: white;
+            padding: 10px 15px;
+            cursor: pointer;
+            font-size: 16px;
+            border-radius: 5px;
+        }
+
+        .nav-buttons button:hover {
+            background: #777;
+        }
+
+        .edit-button {
+            background: red;
+            padding: 10px 15px;
+            font-weight: bold;
+        }
+
+        .edit-button:hover {
+            background: darkred;
+        }
+
+        /* Main Layout */
+        .container {
+            display: flex;
+            flex: 1;
+        }
+
+        .sidebar {
+            width: 250px;
+            background-color: #f4f4f4;
+            padding: 20px;
+            border-right: 2px solid #ddd;
+        }
+
+        .sidebar h3 {
+            margin-bottom: 10px;
+        }
+
+        .sidebar p {
+            margin-bottom: 15px;
+            font-size: 16px;
+        }
+
+        .main-content {
+            flex-grow: 1;
+            padding: 40px;
+        }
+
+        .product-name {
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        /* Pretty bordered text boxes */
+        .product-description {
+            font-size: 18px;
+            line-height: 1.5;
+            padding: 15px;
+            margin-top: 10px;
+            position: relative;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+            background-color: #fff;
+            transition: all 0.3s ease-in-out;
+            cursor: grab;
+        }
+
+        /* When dragging */
+        .product-description:active {
+            cursor: grabbing;
+        }
+
+        /* Border changes when editing */
+        .editable[contenteditable="true"] {
+            border: 2px dashed #007bff;
+            box-shadow: 0 0 10px rgba(0, 123, 255, 0.3);
+            background-color: #f9f9ff;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .action-buttons {
+            margin-top: 10px;
+        }
+
+        .action-buttons button {
+            background: green;
+            border: none;
+            color: white;
+            padding: 8px 12px;
+            cursor: pointer;
+            font-size: 14px;
+            border-radius: 5px;
+            margin-right: 5px;
+        }
+
+        /* Remove button */
+        .remove-btn {
+            background: darkred;
+            border: none;
+            color: white;
+            padding: 5px 10px;
+            cursor: pointer;
+            font-size: 12px;
+            border-radius: 3px;
+            position: absolute;
+            top: 5px;
+            right: 5px;
+        }
+
+        .remove-btn:hover {
+            background: red;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation Bar -->
+    <div class="navbar">
+        <div class="nav-buttons">
+            <button>Home</button>
+            <button>Catalog</button>
+            <button>Points</button>
+            <button>More</button>
+        </div>
+        <button class="edit-button" id="edit-btn">Edit</button>
+    </div>
+
+    <div class="container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <h3><u>Project Details</u></h3>
+            <p><b>Team Number:</b> <span id="team-number">22</span></p>
+            <p><b>Sprint Number:</b> <span id="sprint-number">2</span></p>
+            <p><b>Release Date:</b> <span id="release-date">February 6, 2025</span></p>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <h1 class="product-name">Product Name</h1>
+
+            <div id="description-container">
+                <div class="product-description editable" contenteditable="false" draggable="true">
+                    This is the product description. It provides an overview of the product’s features, benefits, and key details.
+                    <button class="remove-btn hidden" onclick="removeTextBox(this)">X</button>
+                </div>
+            </div>
+
+            <div class="action-buttons hidden" id="edit-controls">
+                <button onclick="addTextBox()">Add Text Box</button>
+                <button onclick="saveChanges()">Save</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const editButton = document.getElementById("edit-btn");
+        const editControls = document.getElementById("edit-controls");
+        const descriptionContainer = document.getElementById("description-container");
+        let isEditing = false;
+
+        editButton.addEventListener("click", () => {
+            isEditing = !isEditing;
+            document.querySelectorAll(".editable").forEach(desc => {
+                desc.contentEditable = isEditing;
+                desc.draggable = isEditing; // Enable drag only when editing
+                desc.querySelector(".remove-btn").classList.toggle("hidden", !isEditing);
+            });
+
+            editControls.classList.toggle("hidden", !isEditing);
+            editButton.textContent = isEditing ? "Cancel" : "Edit";
+        });
+
+        function addTextBox() {
+            const newTextBox = document.createElement("div");
+            newTextBox.className = "product-description editable";
+            newTextBox.contentEditable = "true";
+            newTextBox.textContent = "New description text...";
+            newTextBox.draggable = true;
+
+            newTextBox.addEventListener("focus", function () {
+                if (this.textContent === "New description text...") this.textContent = "";
+            });
+
+            newTextBox.addEventListener("blur", function () {
+                if (this.textContent.trim() === "") this.textContent = "New description text...";
+            });
+
+            const removeButton = document.createElement("button");
+            removeButton.textContent = "X";
+            removeButton.className = "remove-btn";
+            removeButton.onclick = function () { removeTextBox(this); };
+
+            newTextBox.appendChild(removeButton);
+            descriptionContainer.appendChild(newTextBox);
+            newTextBox.focus();
+
+            enableDragAndDrop();
+        }
+
+        function removeTextBox(button) {
+            button.parentElement.remove();
+        }
+
+        function saveChanges() {
+            isEditing = false;
+            document.querySelectorAll(".editable").forEach(desc => {
+                desc.contentEditable = "false";
+                desc.draggable = false;
+                desc.querySelector(".remove-btn").classList.add("hidden");
+            });
+
+            editControls.classList.add("hidden");
+            editButton.textContent = "Edit";
+        }
+
+        function enableDragAndDrop() {
+            let draggedItem = null;
+
+            document.querySelectorAll(".editable").forEach(item => {
+                item.addEventListener("dragstart", function () {
+                    draggedItem = this;
+                    setTimeout(() => this.style.display = "none", 0);
+                });
+
+                item.addEventListener("dragend", function () {
+                    setTimeout(() => this.style.display = "block", 0);
+                    draggedItem = null;
+                });
+
+                item.addEventListener("dragover", function (e) {
+                    e.preventDefault();
+                    this.style.border = "2px solid #007bff";
+                });
+
+                item.addEventListener("dragleave", function () {
+                    this.style.border = "2px solid #ddd";
+                });
+
+                item.addEventListener("drop", function () {
+                    this.style.border = "2px solid #ddd";
+                    descriptionContainer.insertBefore(draggedItem, this);
+                });
+            });
+        }
+
+        enableDragAndDrop();
+    </script>
+
+</body>
+</html>
