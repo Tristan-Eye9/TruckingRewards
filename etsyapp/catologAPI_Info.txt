@@ -1,8 +1,0 @@
-This is the catolog api information:
-
--The api will be using the etsy api. Currently these are the api details: 
-Keystring:  u2oo5f5zdr7lxwkoxfrjxspm
-Shared secret:  i4g118uzzx
-
--package.json and server.js come directly from the quick start tutorial on etsy
--postman link: https://app.getpostman.com/join-team?invite_code=cb5126dab213a8fbfb7a5f1ec72e6e89674b22a66f4a6e44a85ccec56a5764be

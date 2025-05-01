@@ -1,0 +1,54 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders initial page unchanged 1`] = `
+<div>
+  <div
+    class="relative flex flex-col items-center justify-center h-screen bg-gradient-to-br from-red-600 via-orange-500 to-yellow-400 text-white"
+  >
+    <div
+      class="absolute inset-0 bg-cover bg-center opacity-50"
+      style="background-image: url(/truck1.jpeg);"
+    />
+    <div
+      class="relative z-10 flex flex-col items-center p-6 bg-white bg-opacity-30 backdrop-blur-lg rounded-2xl shadow-lg"
+    >
+      <img
+        alt="Trucks"
+        class="mb-4 rounded-lg shadow-md"
+        data-nimg="1"
+        decoding="async"
+        height="250"
+        loading="lazy"
+        src="/_next/image?url=%2Ftruck1.jpeg&w=1080&q=75"
+        srcset="/_next/image?url=%2Ftruck1.jpeg&w=640&q=75 1x, /_next/image?url=%2Ftruck1.jpeg&w=1080&q=75 2x"
+        style="color: transparent;"
+        width="500"
+      />
+      <h1
+        class="text-5xl font-bold mb-4 text-shadow-md"
+      >
+        Welcome Mother Trucker!
+      </h1>
+      <p
+        class="text-lg mb-6 text-gray-200"
+      >
+        Please sign in or sign up to continue.
+      </p>
+      <div
+        class="flex space-x-4"
+      >
+        <button
+          class="px-6 py-3 bg-red-700 text-white rounded-lg hover:bg-red-800 transition-all duration-300 shadow-md"
+        >
+          Sign In
+        </button>
+        <button
+          class="px-6 py-3 border border-white text-white rounded-lg hover:bg-white hover:text-gray-800 transition-all duration-300 shadow-md"
+        >
+          Sign Up
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+`;
