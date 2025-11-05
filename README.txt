@@ -13,7 +13,7 @@ SUMMARY:
     10 1-week sprints, including a research phase as we were unfamiliar with AWS technologies.
 
     Over all I'm very happy with how it turned out, and given enough time I'm confident it would
-    have been refined into a great project. Please don't be afraid to reach out if you want to
+    have been refined into an even greater project. Please don't be afraid to reach out if you want to
     discuss anything or have any questions regarding this project.
 
 Youtube Demonstration:
